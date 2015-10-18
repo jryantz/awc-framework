@@ -328,6 +328,61 @@ class User {
         }
     }
     
+    /*
+     * 
+     *
+     * 
+     *
+     */
+    public function createName() {
+        
+        $Verify = new Verify;
+        
+        $first = trim(strip_tags($_POST['first']));
+        $middle = trim(strip_tags($_POST['middle']));
+        $last = trim(strip_tags($_POST['last']));
+
+        if(!isset($first) && !isset($middle) && !isset($last)) {
+            $_SESSION['alert'] = 'Not all fields have been completed.';
+        } elseif(!$Verify->length($first, 255)) {
+            $_SESSION['alert'] = 'Your first name is too long to store in the database.';
+        } elseif(!$Verify->length($middle, 255)) {
+            $_SESSION['alert'] = 'Your middle name is too long to store in the database.';
+        } elseif(!$Verify->length($last, 255)) {
+            $_SESSION['alert'] = 'Your last name is too long to store in the database.';
+        } else {
+
+            $Db = new Db;
+            $query = $Db->query('user_name', array(array('user_id', '=', $_SESSION['user'], '')));
+            $numrows = mysqli_num_rows($query);
+            
+            if($numrows > 0) {
+                $_SESSION['alert'] = 'Error, please try again.';
+            } else {
+                
+                $insert = $Db->insert('user_name', array('', $_SESSION['user'], $first, $middle, $last));
+                
+                if(!$insert) {
+                    $_SESSION['alert'] = 'The name could not be entered in the database.';
+                } else {
+                    
+                    $_SESSION['alert'] = 'Your name has successfully been entered.';
+                }
+            }
+        }
+    }
+    
+    /*
+     * 
+     *
+     * 
+     *
+     */
+    public function changeName() {
+        
+        
+    }
+    
 }
 
 ?>
