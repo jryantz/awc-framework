@@ -1,0 +1,37 @@
+{
+    "name":"Test",
+    "version":"0.1",
+    "menu":{
+        "main":{
+            "0":{
+                "name":"Test",
+                "location":"#",
+                "permission":"1",
+                "sub":{
+                    "0":{
+                        "name":"Test Sub",
+                        "location":"#",
+                        "permission":"1"
+                    },
+                    "1":{
+                        "name":"Test Sub2",
+                        "location":"#",
+                        "permission":"1"
+                    }
+                }
+            },
+            "1":{
+                "name":"Test Files",
+                "location":"#",
+                "permission":"1"
+            }
+        },
+        "options":{
+            "0":{
+                "name":"Test Settings",
+                "location":"#",
+                "permission":"3"
+            }
+        }
+    }
+}

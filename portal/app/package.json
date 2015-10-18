@@ -1,0 +1,72 @@
+{
+    "name":"",
+    "version":"",
+    "menu":{
+        "top":{
+            "0":{
+                "name":"Dashboard",
+                "location":"#",
+                "permission":"0",
+                "sub":{
+                    "0":{
+                        "name":"Home",
+                        "location":"index.php",
+                        "permission":"0"
+                    },
+                    "1":{
+                        "name":"Updates",
+                        "location":"updates.php",
+                        "permission":"4"
+                    }
+                }
+            }
+        },
+        "main":{
+
+        },
+        "tools":{
+
+        },
+        "options":{
+            "0":{
+                "name":"General",
+                "location":"options-general.php",
+                "permission":"0"
+            },
+            "1":{
+                "name":"Packages",
+                "location":"packages.php",
+                "permission":"3"
+            },
+            "2":{
+                "name":"Users",
+                "location":"#",
+                "permission":"0",
+                "sub":{
+                    "0":{
+                        "name":"All Users",
+                        "location":"users.php",
+                        "permission":"3"
+                    },
+                    "1":{
+                        "name":"New User",
+                        "location":"user-new.php",
+                        "permission":"3"
+                    },
+                    "2":{
+                        "name":"View Profile",
+                        "location":"profile.php",
+                        "permission":"0"
+                    }
+                }
+            }
+        },
+        "site":{
+            "0":{
+                "name":"Logout",
+                "location":"logout.php",
+                "permission":"0"
+            }
+        }
+    }
+}
