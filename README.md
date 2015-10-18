@@ -1,12 +1,11 @@
-# awc-framework
+# AWC Framework
 A custom framework made to make website creation easier and better.
 
-# requirements
+# Requirements
 1. PHP >= 5.4
 2. More to come...
 
-# creators
-*Lead Designer and Developer*
-Jonathan Yantz
+# Creators
+**Lead Designer and Developer:** Jonathan Yantz
 
 More to come...
