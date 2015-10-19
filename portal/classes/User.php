@@ -124,7 +124,13 @@ class User {
     /*
      * Create function: 
      *
-     * 
+     * verifies the token, 
+     * gets the information submitted from the form,
+     * verifies that the information follows the parameters set,
+     * connect to the database, 
+     * verify that the user being created doesn't already exist,
+     * generate server side information,
+     * insert it into the database.
      *
      */
     public function create() {
@@ -248,13 +254,76 @@ class User {
             $total = array();
             
             while($row = mysqli_fetch_assoc($query)) {
-                $total[] = array(
+                $total[$row['id']][0] = array(
                     'id' => $row['id'],
                     'username' => $row['username'],
                     'email' => $row['email_local'] . '@' . $row['email_domain'],
                     'create_date' => $row['create_date'],
                     'rank' => $row['rank']
                 );
+                
+                $queryName = $Db->query('user_name', array(array('user_id', '=', $row['id'], '')));
+                $numrowsName = mysqli_num_rows($queryName);
+
+                if($numrowsName != 1) {
+                    //do nothing, doesn't necessarily need to be set
+                } else {
+                    
+                    while($rowName = mysqli_fetch_assoc($queryName)) {
+                        $total[$rowName['user_id']][1] = array(
+                            'first' => $rowName['first'],
+                            'middle' => $rowName['middle'],
+                            'last' => $rowName['last']
+                        );
+                    }
+                }
+            }
+            
+            return $total;
+        }
+        
+        return;
+    }
+    
+    /*
+     * GetData function:
+     *
+     *
+     *
+     */
+    public function getData() {
+        
+        $Db = new Db;
+        $query = $Db->query('user', array(array('id', '=', $_SESSION['user'], '')));
+        $numrows = mysqli_num_rows($query);
+
+        if($numrows != 1) {
+            $_SESSION['alert'] = 'Error, please try again.';
+        } else {
+
+            $total = array();
+            
+            while($row = mysqli_fetch_assoc($query)) {
+                $total[] = array(
+                    'username' => $row['username'],
+                    'email' => $row['email_local'] . '@' . $row['email_domain'],
+                );
+            }
+            
+            $query = $Db->query('user_name', array(array('user_id', '=', $_SESSION['user'], '')));
+            $numrows = mysqli_num_rows($query);
+            
+            if($numrows != 1) {
+                //do nothing, doesn't necessarily need to be set
+            } else {
+                
+                while($row = mysqli_fetch_assoc($query)) {
+                    $total[] = array(
+                        'first' => $row['first'],
+                        'middle' => $row['middle'],
+                        'last' => $row['last']
+                    );
+                }
             }
             
             return $total;
@@ -329,8 +398,8 @@ class User {
     }
     
     /*
+     * CreateName function:
      * 
-     *
      * 
      *
      */
@@ -342,9 +411,7 @@ class User {
         $middle = trim(strip_tags($_POST['middle']));
         $last = trim(strip_tags($_POST['last']));
 
-        if(!isset($first) && !isset($middle) && !isset($last)) {
-            $_SESSION['alert'] = 'Not all fields have been completed.';
-        } elseif(!$Verify->length($first, 255)) {
+        if(!$Verify->length($first, 255)) {
             $_SESSION['alert'] = 'Your first name is too long to store in the database.';
         } elseif(!$Verify->length($middle, 255)) {
             $_SESSION['alert'] = 'Your middle name is too long to store in the database.';
@@ -380,7 +447,66 @@ class User {
      */
     public function changeName() {
         
+        $Verify = new Verify;
         
+        $first = trim(strip_tags($_POST['first']));
+        $middle = trim(strip_tags($_POST['middle']));
+        $last = trim(strip_tags($_POST['last']));
+
+        if(!$Verify->length($first, 255)) {
+            $_SESSION['alert'] = 'Your first name is too long to store in the database.';
+        } elseif(!$Verify->length($middle, 255)) {
+            $_SESSION['alert'] = 'Your middle name is too long to store in the database.';
+        } elseif(!$Verify->length($last, 255)) {
+            $_SESSION['alert'] = 'Your last name is too long to store in the database.';
+        } else {
+            
+            $Db = new Db;
+            $query = $Db->query('user_name', array(array('user_id', '=', $_SESSION['user'], '')));
+            $numrows = mysqli_num_rows($query);
+            
+            if($numrows != 1) {
+                $_SESSION['alert'] = 'Error, please try again.';
+            } else {
+                
+                while($row = mysqli_fetch_assoc($query)) {
+                    if($first == '') {
+                        $first = $row['first'];
+                    }
+                    
+                    if($middle == '') {
+                        $middle = $row['middle'];
+                    }
+                    
+                    if($last == '') {
+                        $last = $row['last'];
+                    }
+                }
+                
+                $updateFirst = $Db->update('user_name', array('first', '=', $first), array(array('user_id', '=', $_SESSION['user'], '')));
+                
+                if(!$updateFirst) {
+                    $_SESSION['alert'] = 'Error, could not completely update name.';
+                } else {
+                    
+                    $updateMiddle = $Db->update('user_name', array('middle', '=', $middle), array(array('user_id', '=', $_SESSION['user'], '')));
+                    
+                    if(!$updateMiddle) {
+                        $_SESSION['alert'] = 'Error, could not completely update name.';
+                    } else {
+                        
+                        $updateLast = $Db->update('user_name', array('last', '=', $last), array(array('user_id', '=', $_SESSION['user'], '')));
+                        
+                        if(!$updateLast) {
+                            $_SESSION['alert'] = 'Error, could not completely update name.';
+                        } else {
+                            
+                            $_SESSION['alert'] = 'Your name has been updated.';
+                        }
+                    }
+                }
+            }
+        }
     }
     
 }
