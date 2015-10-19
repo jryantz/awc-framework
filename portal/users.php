@@ -42,6 +42,7 @@ if(isset($_POST['updateRank'])) {
         <table border="1">
             <tr>
                 <td>Username</td>
+                <td>Name</td>
                 <td>Email</td>
                 <td>Create Date</td>
                 <td>Rank</td>
@@ -57,12 +58,17 @@ if(isset($_POST['updateRank'])) {
             foreach($list as $item) {
                 echo '<tr>';
                 
-                echo '<td>' . $item['username'] . '</td>';
-                echo '<td>' . $item['email'] . '</td>';
-                echo '<td>' . $item['create_date'] . '</td>';
+                echo '<td>' . $item[0]['username'] . '</td>';
+                if(isset($item[1])) {
+                    echo '<td>' . $item[1]['first'] . ' ' . $item[1]['middle'] . ' ' . $item[1]['last'] . '</td>';
+                } else {
+                    echo '<td><i>not set</i></td>';
+                }
+                echo '<td>' . $item[0]['email'] . '</td>';
+                echo '<td>' . $item[0]['create_date'] . '</td>';
                 
                 echo '<td>';
-                switch($item['rank']) {
+                switch($item[0]['rank']) {
                     case 0:
                         echo 'Subscriber';
                         break;
@@ -88,14 +94,14 @@ if(isset($_POST['updateRank'])) {
                 
                 echo '<td></td>';
                 
-                if($_SESSION['user'] == $item['id']) {
+                if($_SESSION['user'] == $item[0]['id']) {
                     echo '<td></td><td></td>';
                 } else {
                     
                     echo '<td>';
                         echo '<form action="" method="post">';
                             echo 'Confirm: ';
-                            echo '<input type="hidden" name="id" value="' . $item['id'] . '">';
+                            echo '<input type="hidden" name="id" value="' . $item[0]['id'] . '">';
                             echo '<input type="hidden" name="confirm" value="0">';
                             echo '<input type="checkbox" name="confirm" value="1">';
                             echo '<input type="submit" name="deleteUser" value="X">';
@@ -104,7 +110,7 @@ if(isset($_POST['updateRank'])) {
 
                     echo '<td>';
                         echo '<form action="" method="post">';
-                            echo '<input type="hidden" name="id" value="' . $item['id'] . '">';
+                            echo '<input type="hidden" name="id" value="' . $item[0]['id'] . '">';
                             echo '<select name="rank">';
                                 echo '<option value="" disabled selected>Select Rank</option>';
                                 echo '<option value="0">Subscriber</option>';
