@@ -7,12 +7,12 @@ if(!isset($_SESSION['user'])) {
 }
 
 if(isset($_POST['updateName'])) {
-    $User = new User;
+    $User = new User_Name;
     $User->changeName();
 }
 
 if(isset($_POST['submitName'])) {
-    $User = new User;
+    $User = new User_Name;
     $User->createName();
 }
 

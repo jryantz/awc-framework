@@ -7,7 +7,7 @@ if(!isset($_SESSION['user'])) {
 }
 
 if(isset($_POST['createUser'])) {
-    $User = new User;
+    $User = new User_Admin;
     $User->create();
 }
 

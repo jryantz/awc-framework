@@ -7,7 +7,7 @@ if(!isset($_SESSION['user'])) {
 }
 
 if(isset($_POST['deleteUser'])) {
-    $User = new User;
+    $User = new User_Admin;
     if($_POST['confirm'] == 1) {
         $User->delete();
     } else {
@@ -16,7 +16,7 @@ if(isset($_POST['deleteUser'])) {
 }
 
 if(isset($_POST['updateRank'])) {
-    $User = new User;
+    $User = new User_Admin;
     $User->changeRank();
 }
 
