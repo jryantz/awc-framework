@@ -40,8 +40,9 @@ $token = $Token->generate();
         $User = new User;
         $data = $User->getData();
         
-        if(isset($data[1]['first']) && isset($data[1]['middle']) && isset($data[1]['last'])):
+        echo '<input type="text" name="username" value="' . $data[0]['username'] . '" disabled>Usernames cannot be changed.<br><br>';
         
+        if(isset($data[1]['first']) && isset($data[1]['middle']) && isset($data[1]['last'])):
         echo $data[1]['first'] . ' ' . $data[1]['middle'] . ' ' . $data[1]['last'];
         ?>
         
@@ -52,9 +53,7 @@ $token = $Token->generate();
             <input type="hidden" name="token" value="<?php echo $token; ?>">
             <input type="submit" name="updateName" value="Update">
         </form>
-        
         <?php else: ?>
-        
         <form action="" method="post">
             <input type="text" name="first" placeholder="First Name">
             <input type="text" name="middle" placeholder="Middle Name / MI">
@@ -64,5 +63,8 @@ $token = $Token->generate();
         </form>
         
         <?php endif; ?>
+        
+        <br>
+        <a href="#">Change Password</a>
     </body>
 </html>
