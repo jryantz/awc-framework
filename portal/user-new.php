@@ -7,7 +7,7 @@ if(!isset($_SESSION['user'])) {
 }
 
 if(isset($_POST['createUser'])) {
-    $User = new User_Admin;
+    $User = new Admin;
     $User->create();
 }
 
@@ -20,21 +20,21 @@ $token = $Token->generate();
 
 <html>
     <head>
-    
+
     </head>
-    
+
     <body>
         <?php
         if(isset($_SESSION['alert'])) {
             echo $_SESSION['alert'];
             unset($_SESSION['alert']);
         }
-        
+
         include_once('includes/menu.inc.php');
         ?>
-        
+
         <a href="#" onclick="passView();">Show/Hide Password</a>
-        
+
         <form action="" method="post">
             <input type="text" name="username" placeholder="Username">
             <input type="text" name="email" placeholder="Email">
@@ -53,11 +53,11 @@ $token = $Token->generate();
             <input type="submit" name="createUser" value="Create">
         </form>
     </body>
-    
+
     <script src="js/passView.js"></script>
     <script>
         function passView() {
-    
+
             if(document.getElementById('password').attributes['type'].value == 'password') {
                 document.getElementById('password').attributes['type'].value = 'text';
             } else {
@@ -65,29 +65,29 @@ $token = $Token->generate();
                 document.getElementById('password').attributes['type'].value = 'password';
             }
         }
-        
+
         function randomPassword() {
-            
+
             var result = '';
             var length = 12;
             var options = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            
+
             for(var i = 0; i <= length; i++) {
                 result += options[Math.round(Math.random() * (options.length - 1))];
             }
-            
+
             return result;
         }
-        
+
         document.getElementById('random').addEventListener('click', function() {
-            
+
             if(document.getElementById('random').checked) {
                 document.getElementById('password').attributes['type'].value = 'text';
                 document.getElementById('password').disabled = true;
                 document.getElementById('password').value = randomPassword();
-                
+
             } else {
-                
+
                 document.getElementById('password').attributes['type'].value = 'password';
                 document.getElementById('password').disabled = false;
                 document.getElementById('password').value = '';
