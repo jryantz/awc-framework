@@ -4,25 +4,26 @@
     $data = $User->getData();
     ?>
     <p>Welcome <?php echo $data[0]['username']; ?></p>
-    
+
     <?php
     $User = new User;
     $rank = $User->getRank();
 
+    // get the information from the apps package file
     $data = file_get_contents('app/package.json');
     $json = json_decode($data, true);
 
     foreach($json['menu'] as $key => $menu) {
         if($key == 'top' || $key == 'main' || $key == 'tools' || $key == 'options' || $key == 'site') {
-            
+
             echo ucfirst($key) . '<br>';
             foreach($menu as $item) {
                 if($item['permission'] <= $rank) {
                     echo '<li><a href="' . $item['location'] . '">' . $item['name'] . '</a></li>';
-                
+
                     if(isset($item['sub'])) {
                         echo '<ul>';
-                        
+
                         foreach($item['sub'] as $sub) {
                             if($sub['permission'] <= $rank) {
                                 echo '<li><a href="' . $sub['location'] . '">' . $sub['name'] . '</a></li>';
@@ -46,16 +47,16 @@
                                 foreach($packJson['menu'][$packKey] as $packItem) {
                                     if($packItem['permission'] <= $rank) {
                                         echo '<li><a href="../packages/' . $dir . '/' . $packItem['location'] . '">[' . $packJson['name'] . '] ' . $packItem['name'] . '</a></li>';
-                                    
+
                                         if(isset($packItem['sub'])) {
                                             echo '<ul>';
-                                            
+
                                             foreach($packItem['sub'] as $packSub) {
                                                 if($packSub['permission'] <= $rank) {
                                                     echo '<li><a href="../packages/' . $dir . '/' . $packSub['location'] . '">[' . $packJson['name'] . '] ' . $packSub['name'] . '</a></li>';
                                                 }
                                             }
-                                            
+
                                             echo '</ul>';
                                         }
                                     }

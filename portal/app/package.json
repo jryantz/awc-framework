@@ -5,7 +5,7 @@
         "top":{
             "0":{
                 "name":"Dashboard",
-                "location":"#",
+                "location":"index.php",
                 "permission":"0",
                 "sub":{
                     "0":{
@@ -30,7 +30,7 @@
         "options":{
             "0":{
                 "name":"General",
-                "location":"options-general.php",
+                "location":"general.php",
                 "permission":"0"
             },
             "1":{
@@ -40,7 +40,7 @@
             },
             "2":{
                 "name":"Users",
-                "location":"#",
+                "location":"users.php",
                 "permission":"0",
                 "sub":{
                     "0":{
