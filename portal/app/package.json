@@ -1,6 +1,6 @@
 {
     "name":"",
-    "version":"",
+    "version":"0.0.1",
     "menu":{
         "top":{
             "0":{
@@ -68,5 +68,7 @@
                 "permission":"0"
             }
         }
-    }
+    },
+    "host-link":"",
+    "update-link":"http://jryantz.com"
 }
