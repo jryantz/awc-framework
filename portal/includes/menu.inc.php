@@ -1,6 +1,12 @@
 <ul>
     <?php
     $User = new User;
+    $data = $User->getData();
+    ?>
+    <p>Welcome <?php echo $data[0]['username']; ?></p>
+    
+    <?php
+    $User = new User;
     $rank = $User->getRank();
 
     $data = file_get_contents('app/package.json');
